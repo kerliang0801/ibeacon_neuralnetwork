@@ -1,0 +1,108 @@
+#!/bin/bash
+
+if [[ $1 == "parse" ]]; then
+  packet=""
+  capturing=""
+  count=0
+
+  ####completion flags
+  a=0  #completion flag for mint
+  b=0  #completion flag for blueberry
+  c=0  #completion flag for coconut
+  d=0  #completion flag for icy
+  #### arrays for each beacon's information
+  mint=()
+  blueberry=()
+  coconut=()
+  icy=()
+
+
+  while read line
+  do
+    count=$[count + 1]
+    if [ "$capturing" ]; then
+      if [[ $line =~ ^[0-9a-fA-F]{2}\ [0-9a-fA-F] ]]; then
+        packet="$packet $line"
+      else
+        if [[ $packet =~ ^04\ 3E\ 2A\ 02\ 01\ .{26}\ 02\ 01\ .{14}\ 02\ 15 ]]; then
+          UUID=`echo $packet | sed 's/^.\{69\}\(.\{47\}\).*$/\1/'`
+          MAJOR=`echo $packet | sed 's/^.\{117\}\(.\{5\}\).*$/\1/'`
+          MINOR=`echo $packet | sed 's/^.\{123\}\(.\{5\}\).*$/\1/'`
+          POWER=`echo $packet | sed 's/^.\{129\}\(.\{2\}\).*$/\1/'`
+          UUID=`echo $UUID | sed -e 's/\ //g' -e 's/^\(.\{8\}\)\(.\{4\}\)\(.\{4\}\)\(.\{4\}\)\(.\{12\}\)$/\1-\2-\3-\4-\5/'`
+          MAJOR=`echo $MAJOR | sed 's/\ //g'`
+          MAJOR=`echo "ibase=16; $MAJOR" | bc`
+          MINOR=`echo $MINOR | sed 's/\ //g'`
+          MINOR=`echo "ibase=16; $MINOR" | bc`
+          POWER=`echo "ibase=16; $POWER" | bc`
+          POWER=$[POWER - 256]
+          RSSI=`echo $packet | sed 's/^.\{132\}\(.\{2\}\).*$/\1/'`
+          RSSI=`echo "ibase=16; $RSSI" | bc`
+          RSSI=$[RSSI - 256]
+          
+
+
+          #FOR MINT
+          if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "13184" -a "$MINOR" = "55684" -a $a == 0 ]; then
+            #echo "NAME: 'MINT/LIGHTGREEN'     RSSI: $RSSI   $(date -u)"
+            mint=(1 $RSSI $(date -u))
+            a=$[a + 1]
+          fi
+          
+          #FOR BLUEBERRY
+          if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "17050" -a "$MINOR" = "26873" -a $b == 0 ]; then
+            #echo "NAME: 'BLUEBERRY/PURPLE'    RSSI: $RSSI   $(date -u)"
+            blueberry=(2 $RSSI $(date -u))
+            b=$[b + 1]
+          fi
+
+          #FOR COCONUT PUFF
+          if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "21506" -a "$MINOR" = "34046" -a $c == 0 ]; then
+            #echo "NAME: 'COCONUT/WHITE'       RSSI: $RSSI   $(date -u)"
+            coconut=(3 $RSSI $(date -u))
+            c=$[c + 1]
+          fi
+
+          if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "11993" -a "$MINOR" = "38783" -a $d == 0 ]; then
+            #echo "NAME: 'ICY/LIGHTBLUE'       RSSI: $RSSI   $(date -u)"
+            icy=(4 $RSSI $(date -u))
+            d=$[d + 1]
+          fi
+
+
+
+          if [  $a -gt 0 -a  $b -gt 0 -a $c -gt 0 -a $d -gt 0 ]; then
+            echo ${mint[@]} && echo ${mint[@]} >> data.txt
+            echo ${blueberry[@]} && echo ${blueberry[@]} >> data.txt
+            echo ${coconut[@]} && echo ${coconut[@]} >> data.txt
+            echo ${icy[@]} && echo ${icy[@]} >> data.txt
+            echo && echo >> data.txt
+            a=0
+            b=0
+            c=0
+            d=0
+          fi
+
+        fi
+        capturing=""
+        packet=""
+      fi
+    fi
+
+
+
+    if [ ! "$capturing" ]; then
+      if [[ $line =~ ^\> ]]; then
+        packet=`echo $line | sed 's/^>.\(.*$\)/\1/'`
+        capturing=1
+      fi
+    fi
+  done
+
+
+else
+  sudo hcitool lescan --duplicates 1>/dev/null &
+  if [ "$(pidof hcitool)" ]; then
+    sudo hcidump --raw | ./$0 parse $1
+  fi
+fi
