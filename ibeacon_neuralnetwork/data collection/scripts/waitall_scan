@@ -11,6 +11,7 @@ if [[ $1 == "parse" ]]; then
   b=0  #completion flag for blueberry
   c=0  #completion flag for coconut
   d=0  #completion flag for icy
+  count=0 #counter for number of data received
 
 
   #### arrays for each beacon's information
@@ -20,7 +21,7 @@ if [[ $1 == "parse" ]]; then
   icy=()
 
 
-  while read line
+  while read line && [[ $counter -lt 500 ]]
   do
     count=$[count + 1]
     if [ "$capturing" ]; then
@@ -103,13 +104,15 @@ if [[ $1 == "parse" ]]; then
             if [[ $2 == "-csv" ]]; then
             echo "${mint[@]},${blueberry[@]},${coconut[@]},${icy[@]},$3" && echo "${mint[@]},${blueberry[@]},${coconut[@]},${icy[@]},$3" >> $4
             else
-            echo ${mint[@]} && echo ${mint[@]} >> $4
-            echo ${blueberry[@]} && echo ${blueberry[@]} >> $4
-            echo ${coconut[@]} && echo ${coconut[@]} >> $4
-            echo ${icy[@]} && echo ${icy[@]} >> $4
-            echo && echo >> $4
+            echo ${mint[@]} && echo ${mint[@]} >> data.txt
+            echo ${blueberry[@]} && echo ${blueberry[@]} >> data.txt
+            echo ${coconut[@]} && echo ${coconut[@]} >> data.txt
+            echo ${icy[@]} && echo ${icy[@]} >> data.txt
+            echo && echo >> data.txt
             fi
-
+            #echo & update counter
+            echo "COUNTER: $counter"
+            counter=$[counter + 1]
             #clear flags
             a=0
             b=0
