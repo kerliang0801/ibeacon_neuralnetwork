@@ -26,61 +26,62 @@ if [[ $1 == "parse" ]]; then
           POWER=`echo "ibase=16; $POWER" | bc`
           POWER=$[POWER - 256]
           RSSI=`echo $packet | sed 's/^.\{132\}\(.\{2\}\).*$/\1/'`
- 		  RSSI=`echo "ibase=16; $RSSI" | bc`
- 		  RSSI=$[RSSI - 256]
+ 		      RSSI=`echo "ibase=16; $RSSI" | bc`
+ 		      RSSI=$[RSSI - 256]
           
 
 
 
-          if [[ $2 == "-b" ]]; then
-	    	echo "$UUID $MAJOR $MINOR $POWER $RSSI"
+        if [[ $2 == "-b" ]]; then
+	    	  echo "$UUID $MAJOR $MINOR $POWER $RSSI"
           
           
-          elif [[ $2 == "-readall" ]]; then
-          	##FOR ICY
-	          	if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "11993" -a "$MINOR" = "38783" ]; then
-	    	    echo "NAME: 'ICY/LIGHTBLUE'			RSSI: $RSSI		$(date -u)"
-	    		fi
-
-    		#FOR MINT
-    		if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "13184" -a "$MINOR" = "55684" ]; then
-    	    echo "NAME: 'MINT/LIGHTGREEN'			RSSI: $RSSI		$(date -u)"
-    		fi
-    		
-    		#FOR BLUEBERRY
-    		if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "17050" -a "$MINOR" = "26873" ]; then
-    	    echo "NAME: 'BLUEBERRY/PURPLE'		RSSI: $RSSI		$(date -u)"
-    		fi
-
-    		#FOR COCONUT PUFF
-    		if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "21506" -a "$MINOR" = "34046" ]; then
-    	    echo "NAME: 'COCONUT/WHITE'			RSSI: $RSSI		$(date -u)"
-    		fi
-
-    		#echo
-          elif [[ $2 == "-icy" ]]; then
-	        if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "11993" -a "$MINOR" = "38783" ]; then
-	    	echo "NAME: 'ICY/LIGHTBLUE'				RSSI: $RSSI		$(date -u)"
-	    	fi
-
-          elif [[ $2 == "-mint" ]]; then
-    		if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "13184" -a "$MINOR" = "55684" ]; then
-    	    echo "NAME: 'MINT/LIGHTGREEN'			RSSI: $RSSI		$(date -u)"
-    		fi  
-
-          elif [[ $2 == "-blueberry" ]]; then
-    		if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "17050" -a "$MINOR" = "26873" ]; then
-    	    echo "NAME: 'BLUEBERRY/PURPLE'		RSSI: $RSSI		$(date -u)"
-    		fi
-          
-          elif [[ $2 == "-coconut" ]]; then
-    		if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "21506" -a "$MINOR" = "34046" ]; then
-    	    echo "NAME: 'COCONUT/WHITE'			RSSI: $RSSI		$(date -u)"
-    		fi
-
-          else
-    	    echo "UUID: $UUID MAJOR: $MAJOR MINOR: $MINOR POWER: $POWER RSSI: $RSSI"
+        elif [[ $2 == "-readall" ]]; then
+         	##FOR ICY
+	
+          if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "11993" -a "$MINOR" = "38783" ]; then
+            echo "NAME: 'ICY/LIGHTBLUE'			RSSI: $RSSI		$(date -u)"
           fi
+
+          #FOR MINT
+          if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "13184" -a "$MINOR" = "55684" ]; then
+            echo "NAME: 'MINT/LIGHTGREEN'			RSSI: $RSSI		$(date -u)"
+          fi
+          
+          #FOR BLUEBERRY
+          if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "17050" -a "$MINOR" = "26873" ]; then
+            echo "NAME: 'BLUEBERRY/PURPLE'		RSSI: $RSSI		$(date -u)"
+          fi
+
+          #FOR COCONUT PUFF
+          if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "21506" -a "$MINOR" = "34046" ]; then
+            echo "NAME: 'COCONUT/WHITE'			RSSI: $RSSI		$(date -u)"
+          fi
+
+          #echo
+            elif [[ $2 == "-icy" ]]; then
+            if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "11993" -a "$MINOR" = "38783" ]; then
+          echo "NAME: 'ICY/LIGHTBLUE'				RSSI: $RSSI		$(date -u)"
+          fi
+
+            elif [[ $2 == "-mint" ]]; then
+          if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "13184" -a "$MINOR" = "55684" ]; then
+            echo "NAME: 'MINT/LIGHTGREEN'			RSSI: $RSSI		$(date -u)"
+          fi  
+
+            elif [[ $2 == "-blueberry" ]]; then
+          if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "17050" -a "$MINOR" = "26873" ]; then
+            echo "NAME: 'BLUEBERRY/PURPLE'		RSSI: $RSSI		$(date -u)"
+          fi
+            
+            elif [[ $2 == "-coconut" ]]; then
+          if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "21506" -a "$MINOR" = "34046" ]; then
+            echo "NAME: 'COCONUT/WHITE'			RSSI: $RSSI		$(date -u)"
+          fi
+
+        else
+    	    echo "UUID: $UUID MAJOR: $MAJOR MINOR: $MINOR POWER: $POWER RSSI: $RSSI"
+        fi
 
         fi
         capturing=""
