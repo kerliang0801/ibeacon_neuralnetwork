@@ -21,7 +21,7 @@ if [[ $1 == "parse" ]]; then
   icy=()
 
 
-  while read line && [[ $counter -lt 500 ]]
+  while read line && [[ $counter -lt 300 ]]
   do
     count=$[count + 1]
     if [ "$capturing" ]; then
@@ -140,6 +140,6 @@ if [[ $1 == "parse" ]]; then
 else
   sudo hcitool lescan --duplicates 1>/dev/null &
   if [ "$(pidof hcitool)" ]; then
-    sudo hcidump --raw | ./$0 parse $1 $2 $3 $4 $5
+    sudo hcidump --raw | ./$0 parse $1 $2 $3 $4
   fi
 fi

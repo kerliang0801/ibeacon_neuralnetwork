@@ -36,7 +36,7 @@ if [[ $1 == "parse" ]]; then
 	    	  echo "$UUID $MAJOR $MINOR $POWER $RSSI"
           
           
-        elif [[ $2 == "-readall" ]]; then
+        elif [[ $2 == "-readestimote" ]]; then
          	##FOR ICY
 	
           if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "11993" -a "$MINOR" = "38783" ]; then
