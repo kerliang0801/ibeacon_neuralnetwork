@@ -7,9 +7,14 @@
 
 
 #bukit batok room
+0 - under you liang bed
 1 - my desk
 2 - you liang's desk
 3 - on top of my bed
-4 - under you liang bed
+
 
 currently collects 1500 data points per position
+
+
+Merge csv command
+sed 1d position_*.csv > merged.csv
