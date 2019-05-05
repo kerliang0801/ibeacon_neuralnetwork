@@ -10,8 +10,8 @@ import numpy as np
 import tensorflow as tf
 
 # Data sets
-IBEACON_TRAINING = "ibeacon_training.csv"
-IBEACON_TEST = "ibeacon_testing.csv"
+IBEACON_TRAINING = "/home/christopher/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data/training/ibeacon_training.csv"
+IBEACON_TEST = "/home/christopher/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data/testing/ibeacon_testing.csv"
 
 def main():
   # Load datasets.
