@@ -18,3 +18,6 @@ currently collects 1500 data points per position
 
 Merge csv command
 sed 1d position_*.csv > merged.csv
+
+check gpu usage (update every 1 second) command
+nvidia-smi -l 1
