@@ -21,3 +21,6 @@ sed 1d position_*.csv > merged.csv
 
 check gpu usage (update every 1 second) command
 nvidia-smi -l 1
+
+
+
