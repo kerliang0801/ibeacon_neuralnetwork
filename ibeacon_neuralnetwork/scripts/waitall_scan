@@ -11,6 +11,10 @@ if [[ $1 == "parse" ]]; then
   b=0  #completion flag for blueberry
   c=0  #completion flag for coconut
   d=0  #completion flag for icy
+  e=0  #completion flag for beetroot
+  f=0  #completion flag for lemon2
+  g=0  #completion flag for coconut2
+  h=0  #completion flag for candy2
   count=0 #counter for number of data received
 
 
@@ -19,6 +23,10 @@ if [[ $1 == "parse" ]]; then
   blueberry=()
   coconut=()
   icy=()
+  beetroot=()
+  lemon2=()
+  coconut2=()
+  candy2=()
 
 
   while read line && [[ $counter -lt 300 ]]
@@ -98,16 +106,71 @@ if [[ $1 == "parse" ]]; then
           fi
 
 
-          #WRITING INTO TXT FILE // TO BE CONVERTED TO CSV FILE
-          if [  $a -gt 0 -a  $b -gt 0 -a $c -gt 0 -a $d -gt 0 ]; then
+          #FOR BEETROOT
+          if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "30174" -a "$MINOR" = "30511" -a $e == 0 ]; then
             
             if [[ $2 == "-csv" ]]; then
-            echo "${mint[@]},${blueberry[@]},${coconut[@]},${icy[@]},$3" && echo "${mint[@]},${blueberry[@]},${coconut[@]},${icy[@]},$3" >> $4
+            beetroot=($RSSI)
+            else
+            beetroot=(4 $RSSI $(date -u)) #array of ID, corresponding RSSI and timestamp
+            fi
+            
+            e=$[e + 1]
+          fi
+
+
+          #FOR LEMON2
+          if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "30174" -a "$MINOR" = "8113" -a $f == 0 ]; then
+            
+            if [[ $2 == "-csv" ]]; then
+            lemon2=($RSSI)
+            else
+            lemon2=(4 $RSSI $(date -u)) #array of ID, corresponding RSSI and timestamp
+            fi
+            
+            f=$[f + 1]
+          fi
+
+
+          #FOR COCONUT2
+          if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "30174" -a "$MINOR" = "5667" -a $g == 0 ]; then
+            
+            if [[ $2 == "-csv" ]]; then
+            coconut2=($RSSI)
+            else
+            coconut2=(4 $RSSI $(date -u)) #array of ID, corresponding RSSI and timestamp
+            fi
+            
+            g=$[g + 1]
+          fi
+
+          #FOR CANDY2
+          if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "30174" -a "$MINOR" = "31621" -a $h == 0 ]; then
+            
+            if [[ $2 == "-csv" ]]; then
+            candy2=($RSSI)
+            else
+            candy2=(4 $RSSI $(date -u)) #array of ID, corresponding RSSI and timestamp
+            fi
+            
+            h=$[h + 1]
+          fi
+
+          #WRITING INTO TXT FILE // TO BE CONVERTED TO CSV FILE
+          if [  $a -gt 0 -a  $b -gt 0 -a $c -gt 0 -a $d -gt 0 -a $e -gt 0 -a $f -gt 0 -a $g -gt 0 -a $h -gt 0 ]; then
+            
+            if [[ $2 == "-csv" ]]; then
+            echo "${mint[@]},${blueberry[@]},${coconut[@]},${icy[@]},${beetroot[@]},${lemon2[@]},${coconut2[@]},${candy2[@]},$3" && echo 
+            "${mint[@]},${blueberry[@]},${coconut[@]},${icy[@]},${beetroot[@]},${lemon2[@]},${coconut2[@]},${candy2[@]},$3" >> $4
             else
             echo ${mint[@]} && echo ${mint[@]} >> data.txt
             echo ${blueberry[@]} && echo ${blueberry[@]} >> data.txt
             echo ${coconut[@]} && echo ${coconut[@]} >> data.txt
             echo ${icy[@]} && echo ${icy[@]} >> data.txt
+            echo ${beetroot[@]} && echo ${beetroot[@]} >> data.txt
+            echo ${lemon2[@]} && echo ${lemon2[@]} >> data.txt
+            echo ${coconut2[@]} && echo ${coconut2[@]} >> data.txt
+            echo ${candy2[@]} && echo ${candy2[@]} >> data.txt
             echo && echo >> data.txt
             fi
             #echo & update counter
@@ -118,6 +181,10 @@ if [[ $1 == "parse" ]]; then
             b=0
             c=0
             d=0
+            e=0
+            f=0
+            g=0
+            h=0
           fi
 
         fi
