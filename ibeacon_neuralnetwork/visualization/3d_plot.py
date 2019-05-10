@@ -43,12 +43,17 @@ def main():
     #ax.set_zlim3d(-70,-50)
     #ax = plt.axes(projection='3d')
     
-    ax.scatter3D(ps1_x, ps1_y, ps1_z, c=ps1_z, cmap='Greens')
+    #ax.scatter3D(ps1_x, ps1_y, ps1_z, c=ps1_z, cmap='Greens')
     #ax.scatter3D(ps2_x, ps2_y, ps2_z, c=ps2_z, cmap='Blues')
     ax.scatter3D(ps3_x, ps3_y, ps3_z, c=ps3_z, cmap='Reds')
-    #ax.scatter3D(ps4_x, ps4_y, ps4_z, c=ps4_z, cmap='Purples')
+    ax.scatter3D(ps4_x, ps4_y, ps4_z, c=ps4_z, cmap='Purples')
 
     #position 1 and position 2 quite near
+    #position 3 and 4 quite near
+    #explains why accuracy is around 60+ percent
+    #2 out of 6 combinations hard to differentiate
+    #checkout histogram
+    #please verify
     
     plt.show()
 
