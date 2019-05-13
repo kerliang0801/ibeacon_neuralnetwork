@@ -2,6 +2,9 @@ import random
 import numpy as np
 import pylab
 import pandas as pd
+import seaborn as sns
+import csv
+
 
 position_1 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/unprocessed_data/position_1.csv', header=None, sep= ',')
 # Implements a linear Kalman filter.
@@ -31,7 +34,7 @@ class KalmanFilterLinear:
     # eye(n) = nxn identity matrix.
     self.current_prob_estimate = (np.eye(size)-kalman_gain*self.H)*predicted_prob_estimate
 
-numsteps = 100
+numsteps = 1499
 
 A = np.matrix([1])
 H = np.matrix([1])
@@ -44,11 +47,15 @@ P    = np.matrix([1])
 filter = KalmanFilterLinear(A,B,H,xhat,P,Q,R)
 
 position_1 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/unprocessed_data/position_1.csv', header=None, sep= ',')
+
+
 p1 = np.array(position_1.values)
-p1_c0= p1[0:100,0]
-p1_c1= p1[0:100,1]
-p1_c2= p1[0:100,2]
-p1_c3= p1[0:100,3]
+
+
+p1_c0= p1[0:1499,0]
+p1_c1= p1[0:1499,1]
+p1_c2= p1[0:1499,2]
+p1_c3= p1[0:1499,3]
 
 kalman =  []
 kalman1 = []
@@ -72,11 +79,58 @@ for i in range(numsteps):
     kalman3.append(filter.GetCurrentState()[0,0])
     filter.Step(np.matrix([0]),np.matrix([p1_c3[i]]))
 
-print(kalman)
 
-pylab.plot(range(numsteps),p1_c0,'y',range(numsteps),kalman,'r')
-pylab.xlabel('Time')
-pylab.ylabel('RSSI')
-pylab.title('RSSI Measurement with Kalman Filter')
-pylab.legend(('measured','kalman'))
+#must add a line of code here to get rid of first value
+new_kalman = np.empty([1499,4])
+#writting to csv file
+
+for i in range(0,numsteps):
+  new_kalman[i,0] = kalman[i]
+  new_kalman[i,1] = kalman1[i]
+  new_kalman[i,2] = kalman2[i]
+  new_kalman[i,3] = kalman3[i]
+
+
+np.savetxt('kalman_position1.csv',new_kalman.astype(int), delimiter=",")
+print (new_kalman)
+
+
+#print(kalman)
+
+
+#pylab.title('RSSI Measurement with Kalman Filter')
+
+
+sns.distplot(kalman[100:1499], label='mint', color='springgreen')
+sns.distplot(kalman1[100:1499], label='blueberry', color='rebeccapurple')
+sns.distplot(kalman2[100:1499], label='coconut', color='gold')
+sns.distplot(kalman3[100:1499], label='icy', color='aqua')
+
+#ax1 = pylab.subplot(2,2,1)
+#ax1.plot(range(numsteps),p1_c0,'y',range(numsteps),kalman,'r')
+#ax1.set_xlabel('Samples')
+#ax1.set_ylabel('RSSI')
+#ax1.legend(('measured','kalman'))
+
+#ax2 = pylab.subplot(2,2,2)
+#ax2.plot(range(numsteps),p1_c1,'y',range(numsteps),kalman,'r')
+#ax2.set_xlabel('Samples')
+#ax2.set_ylabel('RSSI')
+#ax2.legend(('measured','kalman'))
+
+#ax3 = pylab.subplot(2,2,3)
+#ax3.plot(range(numsteps),p1_c2,'y',range(numsteps),kalman,'r')
+#ax3.set_xlabel('Samples')
+#ax3.set_ylabel('RSSI')
+#ax3.legend(('measured','kalman'))
+
+#ax4 = pylab.subplot(2,2,4)
+#ax4.plot(range(numsteps),p1_c3,'y',range(numsteps),kalman,'r')
+#ax4.set_xlabel('Samples')
+#ax4.set_ylabel('RSSI')
+#ax4.legend(('measured','kalman'))
+
+
 pylab.show()
+
+

@@ -52,6 +52,7 @@ def main():
     y = tf.constant(test_set.target)
 
     return x, y
+  
   print ("Got test inputs\n")
 
   # Evaluate accuracy.
