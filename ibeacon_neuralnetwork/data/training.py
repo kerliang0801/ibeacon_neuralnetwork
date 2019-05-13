@@ -10,8 +10,8 @@ import numpy as np
 import tensorflow as tf
 
 # Data sets
-IBEACON_TRAINING = "ibeacon_training.csv"
-IBEACON_TEST = "ibeacon_testing.csv"
+IBEACON_TRAINING = "ibeacon_training_kalman.csv"
+IBEACON_TEST = "ibeacon_testing_kalman.csv"
 
 def main():
   # Load datasets.

@@ -6,10 +6,10 @@ import pandas as pd
 
 
 #importing csv files
-position_1 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data_augmentation/data/position_1.csv', header=None, sep= ',')
-position_2 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data_augmentation/data/position_2.csv', header=None, sep= ',')
-position_3 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data_augmentation/data/position_3.csv', header=None, sep= ',')
-position_4 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data_augmentation/data/position_4.csv', header=None, sep= ',')
+position_1 = pd.read_csv('/home/christopher/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data_augmentation/data/position_1.csv', header=None, sep= ',')
+position_2 = pd.read_csv('/home/christopher/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data_augmentation/data/position_2.csv', header=None, sep= ',')
+position_3 = pd.read_csv('/home/christopher/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data_augmentation/data/position_3.csv', header=None, sep= ',')
+position_4 = pd.read_csv('/home/christopher/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data_augmentation/data/position_4.csv', header=None, sep= ',')
 
 def main():
 
@@ -38,22 +38,17 @@ def main():
 
     fig = plt.figure()
     ax = Axes3D(fig)
-    #ax.set_xlim3d(-70,-50)
-    #ax.set_ylim3d(-70,-50)
-    #ax.set_zlim3d(-70,-50)
+    ax.set_xlim3d(-70,-50)
+    ax.set_ylim3d(-70,-50)
+    ax.set_zlim3d(-70,-50)
     #ax = plt.axes(projection='3d')
     
-    #ax.scatter3D(ps1_x, ps1_y, ps1_z, c=ps1_z, cmap='Greens')
-    #ax.scatter3D(ps2_x, ps2_y, ps2_z, c=ps2_z, cmap='Blues')
+    ax.scatter3D(ps1_x, ps1_y, ps1_z, c=ps1_z, cmap='Greens')
+    ax.scatter3D(ps2_x, ps2_y, ps2_z, c=ps2_z, cmap='Blues')
     ax.scatter3D(ps3_x, ps3_y, ps3_z, c=ps3_z, cmap='Reds')
     ax.scatter3D(ps4_x, ps4_y, ps4_z, c=ps4_z, cmap='Purples')
 
     #position 1 and position 2 quite near
-    #position 3 and 4 quite near
-    #explains why accuracy is around 60+ percent
-    #2 out of 6 combinations hard to differentiate
-    #checkout histogram
-    #please verify
     
     plt.show()
 
