@@ -96,7 +96,7 @@ if [[ $1 == "parse" ]]; then
             echo "NAME: 'COCONUT/WHITE'			RSSI: $RSSI		$(date -u)"
           fi
 
-  ##______________________________________________UWB beacons____________________________________________________________________##
+  ##______________________________________________ADDING UWB beacons____________________________________________________________________##
         elif [[ $2 == "-beetroot" ]]; then
           if [ "$UUID" = "B9407F30-F5F8-466E-AFF9-25556B57FE6D" -a "$MAJOR" = "30174" -a "$MINOR" = "30511" ]; then
             echo "NAME: 'BEETROOT/PURPLE'		RSSI: $RSSI		$(date -u)"

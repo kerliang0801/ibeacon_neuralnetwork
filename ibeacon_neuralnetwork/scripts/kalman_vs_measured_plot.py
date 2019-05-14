@@ -4,34 +4,8 @@ import pylab
 import pandas as pd
 import seaborn as sns
 import csv
+from kalman_filter_linear import KalmanFilterLinear
 
-
-# Implements a linear Kalman filter.
-class KalmanFilterLinear:
-  def __init__(self,_A, _B, _H, _x, _P, _Q, _R):
-    self.A = _A                      # State transition matrix.
-    self.B = _B                      # Control matrix.
-    self.H = _H                      # Observation matrix.
-    self.current_state_estimate = _x # Initial state estimate.
-    self.current_prob_estimate = _P  # Initial covariance estimate.
-    self.Q = _Q                      # Estimated error in process.
-    self.R = _R                      # Estimated error in measurements.
-  def GetCurrentState(self):
-    return self.current_state_estimate
-  def Step(self,control_vector,measurement_vector):
-    #---------------------------Prediction step-----------------------------
-    predicted_state_estimate = self.A * self.current_state_estimate + self.B * control_vector
-    predicted_prob_estimate = (self.A * self.current_prob_estimate) * np.transpose(self.A) + self.Q
-    #--------------------------Observation step-----------------------------
-    innovation = measurement_vector - self.H*predicted_state_estimate
-    innovation_covariance = self.H*predicted_prob_estimate*np.transpose(self.H) + self.R
-    #-----------------------------Update step-------------------------------
-    kalman_gain = predicted_prob_estimate * np.transpose(self.H) * np.linalg.inv(innovation_covariance)
-    self.current_state_estimate = predicted_state_estimate + kalman_gain * innovation
-    # We need the size of the matrix so we can make an identity matrix.
-    size = self.current_prob_estimate.shape[0]
-    # eye(n) = nxn identity matrix.
-    self.current_prob_estimate = (np.eye(size)-kalman_gain*self.H)*predicted_prob_estimate
 
 numsteps = 1499
 
@@ -45,10 +19,10 @@ P    = np.matrix([1])
 
 filter = KalmanFilterLinear(A,B,H,xhat,P,Q,R)
 
-position_1 = pd.read_csv('/home/christopher/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/unprocessed_data/position_1.csv', header=None, sep= ',')
-position_2 = pd.read_csv('/home/christopher/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/unprocessed_data/position_2.csv', header=None, sep= ',')
-position_3 = pd.read_csv('/home/christopher/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/unprocessed_data/position_3.csv', header=None, sep= ',')
-position_4 = pd.read_csv('/home/christopher/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/unprocessed_data/position_4.csv', header=None, sep= ',')
+position_1 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data/raw/position_1.csv', header=None, sep= ',')
+position_2 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data/raw/position_2.csv', header=None, sep= ',')
+position_3 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data/raw/position_3.csv', header=None, sep= ',')
+position_4 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data/raw/position_4.csv', header=None, sep= ',')
 
 p1 = np.array(position_1.values)
 p2 = np.array(position_2.values)
@@ -206,18 +180,7 @@ for i in range(0,numsteps):
 for i in range(0,numsteps):
   new_kalman3[i,4]=4
 
-
-np.savetxt('kalman_position1.csv',new_kalman.astype(int), delimiter=",")
-np.savetxt('kalman_position2.csv',new_kalman1.astype(int), delimiter=",")
-np.savetxt('kalman_position3.csv',new_kalman2.astype(int), delimiter=",")
-np.savetxt('kalman_position4.csv',new_kalman3.astype(int), delimiter=",")
-
-
-print (new_kalman)
-
-
-
-#pylab.title('RSSI Measurement with Kalman Filter')
+pylab.title('RSSI Measurement of Position 1 with Kalman Filter')
 
 
 #sns.distplot(kalman[100:1499], label='mint', color='springgreen')
@@ -225,31 +188,32 @@ print (new_kalman)
 #sns.distplot(kalman2[100:1499], label='coconut', color='gold')
 #sns.distplot(kalman3[100:1499], label='icy', color='aqua')
 
-#ax1 = pylab.subplot(2,2,1)
-#ax1.plot(range(numsteps),p1_c0,'y',range(numsteps),kalman,'r')
-#ax1.set_xlabel('Samples')
-#ax1.set_ylabel('RSSI')
-#ax1.legend(('measured','kalman'))
+ax1 = pylab.subplot(2,2,1)
+ax1.plot(range(numsteps),p4_c0,'y',range(numsteps),kalman_p4,'r')
+ax1.set_title('Position 4 - Column 0')
+ax1.set_xlabel('Samples')
+ax1.set_ylabel('RSSI')
+ax1.legend(('measured','kalman'))
 
-#ax2 = pylab.subplot(2,2,2)
-#ax2.plot(range(numsteps),p1_c1,'y',range(numsteps),kalman,'r')
-#ax2.set_xlabel('Samples')
-#ax2.set_ylabel('RSSI')
-#ax2.legend(('measured','kalman'))
+ax2 = pylab.subplot(2,2,2)
+ax2.plot(range(numsteps),p4_c1,'y',range(numsteps),kalman1_p4,'r')
+ax2.set_title('Position 4 - Column 1')
+ax2.set_xlabel('Samples')
+ax2.set_ylabel('RSSI')
+ax2.legend(('measured','kalman'))
 
-#ax3 = pylab.subplot(2,2,3)
-#ax3.plot(range(numsteps),p1_c2,'y',range(numsteps),kalman,'r')
-#ax3.set_xlabel('Samples')
-#ax3.set_ylabel('RSSI')
-#ax3.legend(('measured','kalman'))
+ax3 = pylab.subplot(2,2,3)
+ax3.plot(range(numsteps),p4_c2,'y',range(numsteps),kalman2_p4,'r')
+ax3.set_title('Position 4 - Column 2')
+ax3.set_xlabel('Samples')
+ax3.set_ylabel('RSSI')
+ax3.legend(('measured','kalman'))
 
-#ax4 = pylab.subplot(2,2,4)
-#ax4.plot(range(numsteps),p1_c3,'y',range(numsteps),kalman,'r')
-#ax4.set_xlabel('Samples')
-#ax4.set_ylabel('RSSI')
-#ax4.legend(('measured','kalman'))
-
+ax4 = pylab.subplot(2,2,4)
+ax4.plot(range(numsteps),p4_c3,'y',range(numsteps),kalman3_p4,'r')
+ax4.set_title('Position 4 - Column 3')
+ax4.set_xlabel('Samples')
+ax4.set_ylabel('RSSI')
+ax4.legend(('measured','kalman'))
 
 pylab.show()
-
-

@@ -4,15 +4,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-position_1 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/unprocessed_data/position_1.csv', header=None, sep= ',')
-position_2 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/unprocessed_data/position_2.csv', header=None, sep= ',')
-position_3 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/unprocessed_data/position_3.csv', header=None, sep= ',')
-position_4 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/unprocessed_data/position_4.csv', header=None, sep= ',')
+position_1 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data/raw/position_1.csv', header=None, sep= ',')
+position_2 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data/raw/position_2.csv', header=None, sep= ',')
+position_3 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data/raw/position_3.csv', header=None, sep= ',')
+position_4 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data/raw/position_4.csv', header=None, sep= ',')
 
 
 def main():
-   
-   
     p1 = np.array(position_1.values)
     p2 = np.array(position_2.values)
     p3 = np.array(position_3.values)
@@ -38,8 +36,6 @@ def main():
     a4=plt.subplot(2,2,4)
     a4.set_title("position 4", weight='bold')
     plt.plot(p4_c0)
-
-
 
     plt.show()
 
