@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 
 
 #import data
-position_1 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data_augmentation/data/position_1.csv', header=None, sep= ',')
-position_2 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data_augmentation/data/position_2.csv', header=None, sep= ',')
-position_3 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data_augmentation/data/position_3.csv', header=None, sep= ',')
-position_4 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork/data_augmentation/data/position_4.csv', header=None, sep= ',')
+position_1 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork//data/raw/kalman_position_1.csv', header=None, sep= ',')
+position_2 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork//data/raw/kalman_position_2.csv', header=None, sep= ',')
+position_3 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork//data/raw/kalman_position_3.csv', header=None, sep= ',')
+position_4 = pd.read_csv('/home/christopherlau/projects/ibeacon_neuralnetwork/ibeacon_neuralnetwork//data/raw/kalman_position_4.csv', header=None, sep= ',')
 
 
 def main():
@@ -45,7 +45,7 @@ def main():
     sns.set_style('darkgrid')
 
     p1=plt.subplot(2,2,1)
-    p1.set_title("Position 1", weight='bold')
+    p1.set_title("Position 1 (Kalman)", weight='bold')
     p1.set_xlabel("RSSI")
     p1.set_ylabel("Probability")
     sns.distplot(p1_column_0, label='mint', color='springgreen')
@@ -55,7 +55,7 @@ def main():
     plt.legend()
 
     p2=plt.subplot(2,2,2)
-    p2.set_title("Position 2", weight='bold')
+    p2.set_title("Position 2 (Kalman)", weight='bold')
     p2.set_xlabel("RSSI")
     p2.set_ylabel("Probability")
     sns.distplot(p2_column_0, label='mint', color='springgreen')
@@ -65,7 +65,7 @@ def main():
     plt.legend()
 
     p3=plt.subplot(2,2,3)
-    p3.set_title("Position 3", weight='bold')
+    p3.set_title("Position 3 (Kalman)", weight='bold')
     p3.set_xlabel("RSSI")
     p3.set_ylabel("Probability")
     sns.distplot(p3_column_0, label='mint', color='springgreen')
@@ -75,7 +75,7 @@ def main():
     plt.legend()
 
     p4=plt.subplot(2,2,4)
-    p4.set_title("Position 4", weight='bold')
+    p4.set_title("Position 4 (Kalman)", weight='bold')
     p4.set_xlabel("RSSI")
     p4.set_ylabel("Probability")
     sns.distplot(p4_column_0, label='mint', color='springgreen')
@@ -83,7 +83,6 @@ def main():
     sns.distplot(p4_column_2, label='coconut', color='gold')
     sns.distplot(p4_column_3, label='icy', color='aqua')
     plt.legend()
-
 
     plt.show()
 
